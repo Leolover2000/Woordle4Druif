@@ -41,7 +41,7 @@ function updateCurrentRow() {
 
 function handleSubmitGuess() {
     if (currentGuess.length !== 5) {
-        alert('Please enter a 5 letter word');
+        alert('Voer een woord van 5 letters in');
         return;
     }
 
@@ -57,16 +57,17 @@ function handleSubmitGuess() {
         const letterDiv = row.children[i];
         const letter = currentGuess[i];
         const keyButton = Array.from(keys).find(key => key.textContent.toLowerCase() === letter);
+        
         if (letter === word[i]) {
             letterDiv.classList.add('correct');
-            if (keyButton) keyButton.classList.add('correct');
+            updateKeyButtonColor(keyButton, 'correct');
         } else if (word.includes(letter)) {
             letterDiv.classList.add('present');
-            if (keyButton) keyButton.classList.add('present');
+            updateKeyButtonColor(keyButton, 'present');
             correctGuess = false;
         } else {
             letterDiv.classList.add('absent');
-            if (keyButton) keyButton.classList.add('absent');
+            updateKeyButtonColor(keyButton, 'absent');
             correctGuess = false;
         }
     }
@@ -79,4 +80,11 @@ function handleSubmitGuess() {
     } else if (currentAttempt >= maxAttempts) {
         message.textContent = `Game over! Het woord was ${word}.`;
     }
+}
+
+function updateKeyButtonColor(keyButton, colorClass) {
+    // Remove previous color classes
+    keyButton.classList.remove('correct', 'present', 'absent');
+    // Add the new color class
+    keyButton.classList.add(colorClass);
 }
