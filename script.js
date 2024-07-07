@@ -9,6 +9,9 @@ const message = document.getElementById('message');
 const keys = document.querySelectorAll('.key');
 const enterKey = document.getElementById('enter');
 const deleteKey = document.getElementById('delete');
+const winModal = document.getElementById('winModal');
+const span = document.getElementsByClassName('close')[0];
+const correctWordElement = document.getElementById('correctWord');
 
 keys.forEach(key => {
     key.addEventListener('click', (event) => handleKeyPress(event.target.textContent));
@@ -96,9 +99,21 @@ function handleSubmitGuess() {
     currentGuess = "";
 
     if (correctGuess) {
-        message.textContent = 'Gefeliciteerd! Je hebt het woord geraden!';
+        correctWordElement.textContent = word;
+        winModal.style.display = "block";
     } else if (currentAttempt >= maxAttempts) {
         message.textContent = `Game over! Het woord was ${word}.`;
     }
 }
 
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    winModal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target === winModal) {
+        winModal.style.display = "none";
+    }
+}
