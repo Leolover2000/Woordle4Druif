@@ -5,6 +5,7 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #f0f0f0;
+    margin: 0;
 }
 
 .container {
@@ -13,19 +14,27 @@ body {
 
 #game-board {
     display: grid;
-    grid-template-columns: repeat(5, 50px);
+    grid-template-rows: repeat(6, 60px);
     gap: 10px;
     margin-bottom: 20px;
 }
 
+.row {
+    display: grid;
+    grid-template-columns: repeat(5, 60px);
+    gap: 10px;
+}
+
 .letter {
-    width: 50px;
-    height: 50px;
-    border: 1px solid #000;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #000;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 24px;
+    background-color: #fff;
+    text-transform: uppercase;
 }
 
 .correct {
@@ -41,4 +50,33 @@ body {
 .absent {
     background-color: gray;
     color: white;
+}
+
+#keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.key-row {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.key {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #000;
+    background-color: #ddd;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.key:active {
+    background-color: #bbb;
+}
+
+.special-key {
+    width: 60px;
 }
