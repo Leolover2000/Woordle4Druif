@@ -1,5 +1,4 @@
 const word = "appel";  // You can change this to any word you want
-const validWords = ["appel", "bomen", "druif", "fiets", "appel"];  // Add more valid Dutch words
 const maxAttempts = 6;
 let currentAttempt = 0;
 let currentGuess = "";
@@ -42,13 +41,13 @@ function updateCurrentRow() {
     }
 }
 
-function handleSubmitGuess() {
+async function handleSubmitGuess() {
     if (currentGuess.length !== 5) {
         alert('Voer een woord van 5 letters in');
         return;
     }
 
-    if (!validWords.includes(currentGuess)) {
+    if (!await isValidDutchWord(currentGuess)) {
         message.textContent = 'Woord bestaat niet';
         return;
     }
@@ -83,6 +82,12 @@ function handleSubmitGuess() {
     } else if (currentAttempt >= maxAttempts) {
         message.textContent = `Game over! Het woord was ${word}.`;
     }
+}
+
+async function isValidDutchWord(word) {
+    const response = await fetch(`https://api.woord.nl/word/${word}`);
+    const data = await response.json();
+    return data.valid;
 }
 
 function updateKeyButtonColor(keyButton, colorClass) {
