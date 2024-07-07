@@ -1,5 +1,8 @@
 const word = "appel";  // You can change this to any word you want
-const validWords = ["appel", "bomen", "druif", "fiets", "appel"];  // Add more valid Dutch words
+const validWords = [
+    "appel", "bomen", "druif", "fiets", "appel", "stoel", "tafel", "wonen", "laken",
+    "appel", "bloem", "eiken", "fruit", "garen", "hazen", "ijzer", "jager", "koets"
+];  // Add a comprehensive list of valid Dutch words here
 const maxAttempts = 6;
 let currentAttempt = 0;
 let currentGuess = "";
