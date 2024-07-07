@@ -24,8 +24,10 @@ function handleKeyPress(letter) {
 }
 
 function handleDeleteLetter() {
-    currentGuess = currentGuess.slice(0, -1);
-    updateCurrentRow();
+    if (currentGuess.length > 0) {
+        currentGuess = currentGuess.slice(0, -1);
+        updateCurrentRow();
+    }
 }
 
 function updateCurrentRow() {
@@ -38,7 +40,7 @@ function updateCurrentRow() {
 
 function handleSubmitGuess() {
     if (currentGuess.length !== 5) {
-        alert('Please enter a 5 letter word');
+        alert('Voer een woord van 5 letters in');
         return;
     }
 
@@ -54,16 +56,17 @@ function handleSubmitGuess() {
         const letterDiv = row.children[i];
         const letter = currentGuess[i];
         const keyButton = Array.from(keys).find(key => key.textContent.toLowerCase() === letter);
+        
         if (letter === word[i]) {
             letterDiv.classList.add('correct');
-            if (keyButton) keyButton.classList.add('correct');
+            updateKeyButtonColor(keyButton, 'correct');
         } else if (word.includes(letter)) {
             letterDiv.classList.add('present');
-            if (keyButton) keyButton.classList.add('present');
+            updateKeyButtonColor(keyButton, 'present');
             correctGuess = false;
         } else {
             letterDiv.classList.add('absent');
-            if (keyButton) keyButton.classList.add('absent');
+            updateKeyButtonColor(keyButton, 'absent');
             correctGuess = false;
         }
     }
@@ -74,6 +77,4 @@ function handleSubmitGuess() {
     if (correctGuess) {
         message.textContent = 'Gefeliciteerd! Je hebt het woord geraden!';
     } else if (currentAttempt >= maxAttempts) {
-        message.textContent = `Game over! Het woord was ${word}.`;
-    }
-}
+        message.textCont
