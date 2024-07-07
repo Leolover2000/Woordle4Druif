@@ -13,23 +13,28 @@ const winModal = document.getElementById('winModal');
 const span = document.getElementsByClassName('close')[0];
 const correctWordElement = document.getElementById('correctWord');
 
+// Event listeners for virtual keyboard keys
 keys.forEach(key => {
     key.addEventListener('click', (event) => handleKeyPress(event.target.textContent));
 });
 enterKey.addEventListener('click', handleSubmitGuess);
 deleteKey.addEventListener('click', handleDeleteLetter);
 
-// Add event listener for keyboard delete key
+// Event listener for physical keyboard keys
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'Backspace') {
+    if (event.key === 'Enter') {
+        handleSubmitGuess();
+    } else if (event.key === 'Backspace') {
         handleDeleteLetter();
         event.preventDefault(); // Prevent the default action to avoid any unwanted behavior
+    } else if (event.key.match(/^[a-z]$/i)) {
+        handleKeyPress(event.key.toLowerCase());
     }
 });
 
 function handleKeyPress(letter) {
-    if (currentGuess.length < 5) {
-        currentGuess += letter.toLowerCase();
+    if (currentGuess.length < 5 && /^[a-z]$/i.test(letter)) {
+        currentGuess += letter;
         updateCurrentRow();
     }
 }
