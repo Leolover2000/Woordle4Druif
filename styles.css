@@ -73,6 +73,21 @@ body {
     cursor: pointer;
 }
 
+.key.correct {
+    background-color: green;
+    color: white;
+}
+
+.key.present {
+    background-color: yellow;
+    color: black;
+}
+
+.key.absent {
+    background-color: gray;
+    color: white;
+}
+
 .key:active {
     background-color: #bbb;
 }
