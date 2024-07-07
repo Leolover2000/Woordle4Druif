@@ -1,69 +1,47 @@
-const word = "apple";  // You can change this to any word you want
-const maxAttempts = 6;
-let currentAttempt = 0;
-let currentGuess = "";
+let words = [];
+let currentWord = '';
 
-const gameBoard = document.getElementById('game-board');
-const message = document.getElementById('message');
-const keys = document.querySelectorAll('.key');
-const enterKey = document.getElementById('enter');
-const deleteKey = document.getElementById('delete');
-
-keys.forEach(key => {
-    key.addEventListener('click', () => handleKeyPress(key.textContent));
+document.addEventListener('DOMContentLoaded', () => {
+    loadWords();
+    startGame();
 });
-enterKey.addEventListener('click', handleSubmitGuess);
-deleteKey.addEventListener('click', handleDeleteLetter);
 
-function handleKeyPress(letter) {
-    if (currentGuess.length < 5) {
-        currentGuess += letter.toLowerCase();
-        updateCurrentRow();
+function loadWords() {
+    // words.js will define a `words` array
+    currentWord = words[Math.floor(Math.random() * words.length)];
+}
+
+function startGame() {
+    const grid = document.querySelector('.grid');
+    for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 5; j++) {
+            const cell = document.createElement('div');
+            cell.id = `cell-${i}-${j}`;
+            grid.appendChild(cell);
+        }
     }
 }
 
-function handleDeleteLetter() {
-    currentGuess = currentGuess.slice(0, -1);
-    updateCurrentRow();
-}
-
-function updateCurrentRow() {
-    const row = gameBoard.children[currentAttempt];
-    const letters = row.children;
-    for (let i = 0; i < 5; i++) {
-        letters[i].textContent = currentGuess[i] || "";
-    }
-}
-
-function handleSubmitGuess() {
-    if (currentGuess.length !== 5) {
-        alert('Please enter a 5 letter word');
-        return;
-    }
-
-    const row = gameBoard.children[currentAttempt];
-    let correctGuess = true;
+function submitGuess() {
+    const guess = document.getElementById('guessInput').value.toLowerCase();
+    if (guess.length !== 5) return;
+    const grid = document.querySelector('.grid');
+    const row = Math.floor(grid.children.length / 5) - 6 + document.getElementsByTagName('input').length;
 
     for (let i = 0; i < 5; i++) {
-        const letterDiv = row.children[i];
-        const letter = currentGuess[i];
-        if (letter === word[i]) {
-            letterDiv.classList.add('correct');
-        } else if (word.includes(letter)) {
-            letterDiv.classList.add('present');
-            correctGuess = false;
+        const cell = document.getElementById(`cell-${row}-${i}`);
+        cell.textContent = guess[i];
+        if (guess[i] === currentWord[i]) {
+            cell.style.backgroundColor = 'green';
+        } else if (currentWord.includes(guess[i])) {
+            cell.style.backgroundColor = 'yellow';
         } else {
-            letterDiv.classList.add('absent');
-            correctGuess = false;
+            cell.style.backgroundColor = 'grey';
         }
     }
 
-    currentAttempt++;
-    currentGuess = "";
-
-    if (correctGuess) {
-        message.textContent = 'Congratulations! You guessed the word!';
-    } else if (currentAttempt >= maxAttempts) {
-        message.textContent = `Game over! The word was ${word}.`;
+    if (guess === currentWord) {
+        alert('You guessed the word!');
+        location.reload();
     }
 }
