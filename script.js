@@ -77,4 +77,13 @@ function handleSubmitGuess() {
     if (correctGuess) {
         message.textContent = 'Gefeliciteerd! Je hebt het woord geraden!';
     } else if (currentAttempt >= maxAttempts) {
-        message.textCont
+        message.textContent = `Game over! Het woord was ${word}.`;
+    }
+}
+
+function updateKeyButtonColor(keyButton, colorClass) {
+    // Remove previous color classes
+    keyButton.classList.remove('correct', 'present', 'absent');
+    // Add the new color class
+    keyButton.classList.add(colorClass);
+}
