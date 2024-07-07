@@ -9,7 +9,6 @@ const keys = document.querySelectorAll('.key');
 const enterKey = document.getElementById('enter');
 const backspaceKey = document.getElementById('backspace');
 
-// Attach event listeners
 keys.forEach(key => {
     key.addEventListener('click', (event) => handleKeyPress(event.target.textContent));
 });
@@ -29,7 +28,6 @@ function handleKeyPress(letter) {
 
 function handleDeleteLetter() {
     if (currentGuess.length > 0) {
-        // Remove the last character
         currentGuess = currentGuess.slice(0, -1);
         updateCurrentRow();
     }
@@ -87,8 +85,6 @@ function handleSubmitGuess() {
 }
 
 function updateKeyButtonColor(keyButton, colorClass) {
-    // Remove previous color classes
     keyButton.classList.remove('correct', 'present', 'absent');
-    // Add the new color class
     keyButton.classList.add(colorClass);
 }
