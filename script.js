@@ -85,9 +85,9 @@ async function handleSubmitGuess() {
 }
 
 async function isValidDutchWord(word) {
-    const response = await fetch(`https://api.woord.nl/word/${word}`);
+    const response = await fetch(`https://api.datamuse.com/words?sp=${word}&v=nl`);
     const data = await response.json();
-    return data.valid;
+    return data.length > 0;
 }
 
 function updateKeyButtonColor(keyButton, colorClass) {
