@@ -27,13 +27,11 @@ function handleKeyPress(letter) {
 }
 
 function handleDeleteLetter() {
-  if (currentGuess.length > 0) {
-    // Get the current length of the guess
-    const guessLength = currentGuess.length;
-    // Update currentGuess with a substring excluding the last character
-    currentGuess = currentGuess.substring(0, guessLength - 1);
-    updateCurrentRow();
-  }
+    if (currentGuess.length > 0) {
+        // Remove the last character
+        currentGuess = currentGuess.slice(0, -1);
+        updateCurrentRow();
+    }
 }
 
 function updateCurrentRow() {
