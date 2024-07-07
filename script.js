@@ -43,13 +43,13 @@ function updateCurrentRow() {
     }
 }
 
-async function handleSubmitGuess() {
+function handleSubmitGuess() {
     if (currentGuess.length !== 5) {
         alert('Voer een woord van 5 letters in');
         return;
     }
 
-    if (!await isValidDutchWord(currentGuess)) {
+    if (!validWords.includes(currentGuess)) {
         message.textContent = 'Woord bestaat niet';
         return;
     }
@@ -84,12 +84,6 @@ async function handleSubmitGuess() {
     } else if (currentAttempt >= maxAttempts) {
         message.textContent = `Game over! Het woord was ${word}.`;
     }
-}
-
-async function isValidDutchWord(word) {
-    const response = await fetch(`https://api.datamuse.com/words?sp=${word}&v=nl`);
-    const data = await response.json();
-    return data.length > 0;
 }
 
 function updateKeyButtonColor(keyButton, colorClass) {
