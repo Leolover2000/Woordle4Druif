@@ -1,55 +1,82 @@
-const word = "apple";  // You can change this to any word you want
-const maxAttempts = 6;
-let currentAttempt = 0;
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
 
-const gameBoard = document.getElementById('game-board');
-const guessInput = document.getElementById('guess-input');
-const submitGuess = document.getElementById('submit-guess');
-const message = document.getElementById('message');
+.container {
+    text-align: center;
+}
 
-submitGuess.addEventListener('click', handleGuess);
+#game-board {
+    display: grid;
+    grid-template-rows: repeat(6, 60px);
+    gap: 10px;
+    margin-bottom: 20px;
+}
 
-function handleGuess() {
-    const guess = guessInput.value.toLowerCase();
-    if (guess.length !== 5) {
-        alert('Please enter a 5 letter word');
-        return;
-    }
+.row {
+    display: grid;
+    grid-template-columns: repeat(5, 60px);
+    gap: 10px;
+}
 
-    if (currentAttempt >= maxAttempts) {
-        message.textContent = 'No more attempts left. Game over!';
-        return;
-    }
+.letter {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    background-color: #fff;
+    text-transform: uppercase;
+}
 
-    const row = document.createElement('div');
-    row.classList.add('row');
-    let correctGuess = true;
+.correct {
+    background-color: green;
+    color: white;
+}
 
-    for (let i = 0; i < 5; i++) {
-        const letterDiv = document.createElement('div');
-        letterDiv.classList.add('letter');
-        letterDiv.textContent = guess[i];
+.present {
+    background-color: yellow;
+    color: black;
+}
 
-        if (guess[i] === word[i]) {
-            letterDiv.classList.add('correct');
-        } else if (word.includes(guess[i])) {
-            letterDiv.classList.add('present');
-            correctGuess = false;
-        } else {
-            letterDiv.classList.add('absent');
-            correctGuess = false;
-        }
+.absent {
+    background-color: gray;
+    color: white;
+}
 
-        row.appendChild(letterDiv);
-    }
+#keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-    gameBoard.appendChild(row);
-    guessInput.value = '';
-    currentAttempt++;
+.key-row {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
 
-    if (correctGuess) {
-        message.textContent = 'Congratulations! You guessed the word!';
-    } else if (currentAttempt >= maxAttempts) {
-        message.textContent = `Game over! The word was ${word}.`;
-    }
+.key {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #000;
+    background-color: #ddd;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.key:active {
+    background-color: #bbb;
+}
+
+.special-key {
+    width: 60px;
 }
