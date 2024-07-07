@@ -1,4 +1,8 @@
 const word = "appel";  // You can change this to any word you want
+const validWords = [
+    "appel", "bomen", "druif", "fiets", "appel", "stoel", "tafel", "wonen", "laken",
+    "appel", "bloem", "eiken", "fruit", "garen", "hazen", "ijzer", "jager", "koets"
+];  // Add a comprehensive list of valid Dutch words here
 const maxAttempts = 6;
 let currentAttempt = 0;
 let currentGuess = "";
@@ -41,19 +45,28 @@ function handleSubmitGuess() {
         return;
     }
 
+    if (!validWords.includes(currentGuess)) {
+        message.textContent = 'Woord bestaat niet';
+        return;
+    }
+
     const row = gameBoard.children[currentAttempt];
     let correctGuess = true;
 
     for (let i = 0; i < 5; i++) {
         const letterDiv = row.children[i];
         const letter = currentGuess[i];
+        const keyButton = Array.from(keys).find(key => key.textContent.toLowerCase() === letter);
         if (letter === word[i]) {
             letterDiv.classList.add('correct');
+            if (keyButton) keyButton.classList.add('correct');
         } else if (word.includes(letter)) {
             letterDiv.classList.add('present');
+            if (keyButton) keyButton.classList.add('present');
             correctGuess = false;
         } else {
             letterDiv.classList.add('absent');
+            if (keyButton) keyButton.classList.add('absent');
             correctGuess = false;
         }
     }
@@ -62,8 +75,8 @@ function handleSubmitGuess() {
     currentGuess = "";
 
     if (correctGuess) {
-        message.textContent = 'Congratulations! You guessed the word!';
+        message.textContent = 'Gefeliciteerd! Je hebt het woord geraden!';
     } else if (currentAttempt >= maxAttempts) {
-        message.textContent = `Game over! The word was ${word}.`;
+        message.textContent = `Game over! Het woord was ${word}.`;
     }
 }
