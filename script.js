@@ -11,7 +11,7 @@ const enterKey = document.getElementById('enter');
 const deleteKey = document.getElementById('delete');
 
 keys.forEach(key => {
-    key.addEventListener('click', () => handleKeyPress(key.textContent));
+    key.addEventListener('click', (event) => handleKeyPress(event.target.textContent));
 });
 enterKey.addEventListener('click', handleSubmitGuess);
 deleteKey.addEventListener('click', handleDeleteLetter);
