@@ -9,6 +9,7 @@ const keys = document.querySelectorAll('.key');
 const enterKey = document.getElementById('enter');
 const backspaceKey = document.getElementById('backspace');
 
+// Attach event listeners
 keys.forEach(key => {
     key.addEventListener('click', (event) => handleKeyPress(event.target.textContent));
 });
