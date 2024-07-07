@@ -49,6 +49,7 @@ function handleSubmitGuess() {
 
     const row = gameBoard.children[currentAttempt];
     let correctGuess = true;
+    const letterStatus = {};
 
     for (let i = 0; i < 5; i++) {
         const letterDiv = row.children[i];
@@ -57,23 +58,27 @@ function handleSubmitGuess() {
 
         if (letter === word[i]) {
             letterDiv.classList.add('correct');
-            if (keyButton) {
-                keyButton.classList.remove('present', 'absent');
-                keyButton.classList.add('correct');
-            }
+            letterStatus[letter] = 'correct';
         } else if (word.includes(letter)) {
             letterDiv.classList.add('present');
-            if (keyButton && !keyButton.classList.contains('correct')) {
-                keyButton.classList.remove('absent');
-                keyButton.classList.add('present');
+            if (letterStatus[letter] !== 'correct') {
+                letterStatus[letter] = 'present';
             }
             correctGuess = false;
         } else {
             letterDiv.classList.add('absent');
-            if (keyButton && !keyButton.classList.contains('correct') && !keyButton.classList.contains('present')) {
-                keyButton.classList.add('absent');
+            if (!letterStatus[letter]) {
+                letterStatus[letter] = 'absent';
             }
             correctGuess = false;
+        }
+    }
+
+    for (const [letter, status] of Object.entries(letterStatus)) {
+        const keyButton = Array.from(keys).find(key => key.textContent.toLowerCase() === letter);
+        if (keyButton) {
+            keyButton.classList.remove('correct', 'present', 'absent');
+            keyButton.classList.add(status);
         }
     }
 
