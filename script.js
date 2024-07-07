@@ -16,6 +16,14 @@ keys.forEach(key => {
 enterKey.addEventListener('click', handleSubmitGuess);
 deleteKey.addEventListener('click', handleDeleteLetter);
 
+// Add event listener for keyboard delete key
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Backspace') {
+        handleDeleteLetter();
+        event.preventDefault(); // Prevent the default action to avoid any unwanted behavior
+    }
+});
+
 function handleKeyPress(letter) {
     if (currentGuess.length < 5) {
         currentGuess += letter.toLowerCase();
@@ -24,8 +32,10 @@ function handleKeyPress(letter) {
 }
 
 function handleDeleteLetter() {
-    currentGuess = currentGuess.slice(0, -1);
-    updateCurrentRow();
+    if (currentGuess.length > 0) {
+        currentGuess = currentGuess.slice(0, -1);
+        updateCurrentRow();
+    }
 }
 
 function updateCurrentRow() {
@@ -91,3 +101,4 @@ function handleSubmitGuess() {
         message.textContent = `Game over! Het woord was ${word}.`;
     }
 }
+
