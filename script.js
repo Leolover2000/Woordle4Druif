@@ -11,13 +11,17 @@ const enterKey = document.getElementById('enter');
 const deleteKey = document.getElementById('delete');
 
 keys.forEach(key => {
-    key.addEventListener('click', () => handleKeyPress(key.textContent));
+    key.addEventListener('click', (event) => handleKeyPress(event.target.textContent));
 });
 enterKey.addEventListener('click', handleSubmitGuess);
 deleteKey.addEventListener('click', handleDeleteLetter);
 
 function handleKeyPress(letter) {
-    if (currentGuess.length < 5) {
+    if (letter.toLowerCase() === 'del') {
+        handleDeleteLetter();
+    } else if (letter.toLowerCase() === 'enter') {
+        handleSubmitGuess();
+    } else if (currentGuess.length < 5) {
         currentGuess += letter.toLowerCase();
         updateCurrentRow();
     }
