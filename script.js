@@ -1,8 +1,5 @@
 const word = "appel";  // You can change this to any word you want
-const validWords = [
-    "appel", "bomen", "druif", "fiets", "appel", "stoel", "tafel", "wonen", "laken",
-    "appel", "bloem", "eiken", "fruit", "garen", "hazen", "ijzer", "jager", "koets"
-];  // Add a comprehensive list of valid Dutch words here
+const validWords = ["appel", "bomen", "druif", "fiets", "appel"];  // Add more valid Dutch words
 const maxAttempts = 6;
 let currentAttempt = 0;
 let currentGuess = "";
@@ -41,7 +38,7 @@ function updateCurrentRow() {
 
 function handleSubmitGuess() {
     if (currentGuess.length !== 5) {
-        alert('Voer een woord van 5 letters in');
+        alert('Please enter a 5 letter word');
         return;
     }
 
@@ -57,17 +54,16 @@ function handleSubmitGuess() {
         const letterDiv = row.children[i];
         const letter = currentGuess[i];
         const keyButton = Array.from(keys).find(key => key.textContent.toLowerCase() === letter);
-        
         if (letter === word[i]) {
             letterDiv.classList.add('correct');
-            updateKeyButtonColor(keyButton, 'correct');
+            if (keyButton) keyButton.classList.add('correct');
         } else if (word.includes(letter)) {
             letterDiv.classList.add('present');
-            updateKeyButtonColor(keyButton, 'present');
+            if (keyButton) keyButton.classList.add('present');
             correctGuess = false;
         } else {
             letterDiv.classList.add('absent');
-            updateKeyButtonColor(keyButton, 'absent');
+            if (keyButton) keyButton.classList.add('absent');
             correctGuess = false;
         }
     }
@@ -80,11 +76,4 @@ function handleSubmitGuess() {
     } else if (currentAttempt >= maxAttempts) {
         message.textContent = `Game over! Het woord was ${word}.`;
     }
-}
-
-function updateKeyButtonColor(keyButton, colorClass) {
-    // Remove previous color classes
-    keyButton.classList.remove('correct', 'present', 'absent');
-    // Add the new color class
-    keyButton.classList.add(colorClass);
 }
