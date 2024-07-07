@@ -7,16 +7,16 @@ const gameBoard = document.getElementById('game-board');
 const message = document.getElementById('message');
 const keys = document.querySelectorAll('.key');
 const enterKey = document.getElementById('enter');
-const deleteKey = document.getElementById('delete');
+const backspaceKey = document.getElementById('backspace');
 
 keys.forEach(key => {
     key.addEventListener('click', (event) => handleKeyPress(event.target.textContent));
 });
 enterKey.addEventListener('click', handleSubmitGuess);
-deleteKey.addEventListener('click', handleDeleteLetter);
+backspaceKey.addEventListener('click', handleDeleteLetter);
 
 function handleKeyPress(letter) {
-    if (letter.toLowerCase() === 'del') {
+    if (letter.toLowerCase() === 'backspace') {
         handleDeleteLetter();
     } else if (letter.toLowerCase() === 'enter') {
         handleSubmitGuess();
