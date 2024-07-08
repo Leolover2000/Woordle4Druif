@@ -34,7 +34,7 @@ document.addEventListener('keydown', (event) => {
 
 function handleKeyPress(letter) {
     if (currentGuess.length < 5 && /^[a-z]$/i.test(letter)) {
-        currentGuess += letter;
+        currentGuess += letter.toLowerCase();  // Normalize input to lowercase
         updateCurrentRow();
     }
 }
@@ -55,6 +55,7 @@ function updateCurrentRow() {
 }
 
 function handleSubmitGuess() {
+    currentGuess = currentGuess.trim().toLowerCase();  // Normalize and trim input
     if (currentGuess.length !== 5) {
         alert('Please enter a 5 letter word');
         return;
