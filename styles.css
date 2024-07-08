@@ -1,28 +1,30 @@
-/* Prevent zoom on double-tap */
-html, body {
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-    touch-action: manipulation;
-    user-select: none;
-    touch-callout: none;
-    -ms-touch-action: manipulation;
+body {
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+    -webkit-user-select: none; /* Prevent text selection */
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Prevent tap highlight */
+    touch-action: manipulation; /* Prevent zooming */
 }
 
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    font-family: Arial, sans-serif;
+.game-container {
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
 
 #game-board {
     display: grid;
     grid-template-rows: repeat(6, 1fr);
-    gap: 10px;
+    gap: 5px;
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .row {
@@ -31,38 +33,90 @@ body {
     gap: 5px;
 }
 
-.tile {
-    width: 60px;
-    height: 60px;
-    border: 2px solid #d3d6da;
+.letter {
+    width: 100%;
+    padding-top: 100%; /* Aspect ratio 1:1 */
+    position: relative;
+    border: 2px solid #000;
+    background-color: #fff;
+    text-transform: uppercase;
+}
+
+.letter div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 24px;
-    font-weight: bold;
+    align-items: center;
+    font-size: 2em;
+}
+
+.correct {
+    background-color: green;
+    color: white;
+}
+
+.present {
+    background-color: yellow;
+    color: black;
+}
+
+.absent {
+    background-color: gray;
+    color: white;
+}
+
+#keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
 }
 
 .key-row {
     display: flex;
     justify-content: center;
     gap: 5px;
-    margin-bottom: 5px;
 }
 
 .key {
-    width: 40px;
-    height: 60px;
-    font-size: 18px;
-    border: 1px solid #d3d6da;
-    border-radius: 5px;
-    background-color: #eee;
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #000;
+    background-color: #ddd;
+    font-size: 1em;
+    cursor: pointer;
+    user-select: none; /* Prevent text selection */
 }
 
-#delete, #enter {
-    width: 60px;
+.key.correct {
+    background-color: green;
+    color: white;
 }
 
-#winModal {
+.key.present {
+    background-color: yellow;
+    color: black;
+}
+
+.key.absent {
+    background-color: gray;
+    color: white;
+}
+
+.key:active {
+    background-color: #bbb;
+}
+
+.special-key {
+    flex: 2;
+}
+
+/* The Modal (background) */
+.modal {
     display: none;
     position: fixed;
     z-index: 1;
@@ -71,10 +125,11 @@ body {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
 }
 
+/* Modal Content */
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto;
@@ -83,6 +138,7 @@ body {
     width: 80%;
 }
 
+/* The Close Button */
 .close {
     color: #aaa;
     float: right;
