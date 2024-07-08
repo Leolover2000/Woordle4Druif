@@ -16,9 +16,21 @@ const correctWordElement = document.getElementById('correctWord');
 // Event listeners for virtual keyboard keys
 keys.forEach(key => {
     key.addEventListener('click', (event) => handleKeyPress(event.target.textContent));
+    key.addEventListener('touchstart', (event) => {
+        event.preventDefault();
+        handleKeyPress(event.target.textContent);
+    });
 });
 enterKey.addEventListener('click', handleSubmitGuess);
+enterKey.addEventListener('touchstart', (event) => {
+    event.preventDefault();
+    handleSubmitGuess();
+});
 deleteKey.addEventListener('click', handleDeleteLetter);
+deleteKey.addEventListener('touchstart', (event) => {
+    event.preventDefault();
+    handleDeleteLetter();
+});
 
 // Event listener for physical keyboard keys
 document.addEventListener('keydown', (event) => {
@@ -67,46 +79,32 @@ function handleSubmitGuess() {
     }
 
     const row = gameBoard.children[currentAttempt];
-    const correctWordLetters = word.split('');
-    const guessLetters = currentGuess.split('');
-
     let correctGuess = true;
     const letterStatus = {};
 
-    // First pass: check for correct letters
-    for (let i = 0; i < 5; i++) {
-        const letterDiv = row.children[i];
-        const letter = currentGuess[i];
-
-        if (letter === word[i]) {
-            letterDiv.classList.add('correct');
-            correctWordLetters[i] = null;  // Mark this letter as used
-            guessLetters[i] = null;
-            letterStatus[letter] = 'correct';
-        } else {
-            correctGuess = false;
-        }
-    }
-
-    // Second pass: check for present letters
     for (let i = 0; i < 5; i++) {
         const letterDiv = row.children[i];
         const letter = currentGuess[i];
         const keyButton = Array.from(keys).find(key => key.textContent.toLowerCase() === letter);
 
-        if (guessLetters[i] !== null && correctWordLetters.includes(letter)) {
+        if (letter === word[i]) {
+            letterDiv.classList.add('correct');
+            letterStatus[letter] = 'correct';
+        } else if (word.includes(letter)) {
             letterDiv.classList.add('present');
-            correctWordLetters[correctWordLetters.indexOf(letter)] = null;  // Mark this letter as used
-            letterStatus[letter] = 'present';
-        } else if (guessLetters[i] !== null) {
+            if (letterStatus[letter] !== 'correct') {
+                letterStatus[letter] = 'present';
+            }
+            correctGuess = false;
+        } else {
             letterDiv.classList.add('absent');
             if (!letterStatus[letter]) {
                 letterStatus[letter] = 'absent';
             }
+            correctGuess = false;
         }
     }
 
-    // Update keyboard letter status
     for (const [letter, status] of Object.entries(letterStatus)) {
         const keyButton = Array.from(keys).find(key => key.textContent.toLowerCase() === letter);
         if (keyButton) {
