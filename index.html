@@ -5,6 +5,163 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Woordle-4-Druif</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .game-container {
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #game-board {
+            display: grid;
+            grid-template-rows: repeat(6, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .letter {
+            width: 100%;
+            padding-top: 100%;
+            position: relative;
+            border: 2px solid #000;
+            background-color: #fff;
+            text-transform: uppercase;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .letter::before {
+            content: attr(data-letter);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .correct {
+            background-color: green;
+            color: white;
+        }
+
+        .present {
+            background-color: yellow;
+            color: black;
+        }
+
+        .absent {
+            background-color: gray;
+            color: white;
+        }
+
+        #keyboard {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .key-row {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .key {
+            flex: 1;
+            min-width: 40px;
+            padding: 10px;
+            border: 1px solid #000;
+            background-color: #ddd;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .key.correct {
+            background-color: green;
+            color: white;
+        }
+
+        .key.present {
+            background-color: yellow;
+            color: black;
+        }
+
+        .key.absent {
+            background-color: gray;
+            color: white;
+        }
+
+        .key:active {
+            background-color: #bbb;
+        }
+
+        .special-key {
+            flex: 2;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="game-container">
@@ -12,46 +169,46 @@
         <div id="game-board">
             <!-- 6 rows for guesses, each with 5 letter blocks -->
             <div class="row">
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
             </div>
             <div class="row">
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
             </div>
             <div class="row">
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
             </div>
             <div class="row">
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
             </div>
             <div class="row">
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
             </div>
             <div class="row">
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
-                <div class="letter"></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
+                <div class="letter" data-letter=""></div>
             </div>
         </div>
         <div id="keyboard">
@@ -106,5 +263,21 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+    document.addEventListener('touchstart', function (event) {
+        if (event.touches.length > 1) {
+            event.preventDefault();
+        }
+    }, { passive: false });
+
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+        let now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+    </script>
 </body>
 </html>
