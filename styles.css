@@ -36,6 +36,7 @@ body {
     font-size: 24px;
     background-color: #fff;
     text-transform: uppercase;
+    color: black; /* Explicitly set text color to black */
 }
 
 .correct {
@@ -72,6 +73,7 @@ body {
     background-color: #ddd;
     font-size: 16px;
     cursor: pointer;
+    color: black; /* Explicitly set text color to black */
 }
 
 .key.correct {
