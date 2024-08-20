@@ -122,7 +122,7 @@ function handleSubmitGuess() {
         correctWordElement.textContent = word;
         winModal.style.display = "block";
     } else if (currentAttempt >= maxAttempts) {
-        message.textContent = `Game over! Het woord was ${word}.`;
+        message.textContent = `Helaas druif, game over! Het woord was ${word}.`;
     }
 }
 
