@@ -151,4 +151,40 @@ document.addEventListener('touchend', function (event) {
     lastTouchEnd = now;
 }, false);
 
+// Function to calculate time remaining and update the countdown
+function startCountdownToTargetDate(targetDate, display) {
+    const countdownInterval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        // Calculate days, hours, minutes, and seconds
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result in the element
+        display.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+        // If the countdown is over, clear the interval
+        if (distance < 0) {
+            clearInterval(countdownInterval);
+            display.textContent = "Countdown ended!";
+        }
+    }, 1000);
+}
+
+// Function to handle the win and start the countdown
+function handleWin() {
+    correctWordElement.textContent = word;
+    winModal.style.display = "block";
+    
+    // Set the target date and time (October 29, 19:00)
+    const targetDate = new Date("October 29, 2024 19:00:00").getTime();
+    const countdownElement = document.getElementById('countdown');
+    
+    // Start the countdown to the target date
+    startCountdownToTargetDate(targetDate, countdownElement);
+}
+
 }
