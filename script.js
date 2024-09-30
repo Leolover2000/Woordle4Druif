@@ -92,7 +92,6 @@ function handleSubmitGuess() {
     for (let i = 0; i < 5; i++) {
         const letterDiv = row.children[i];
         const letter = currentGuess[i];
-        const keyButton = Array.from(keys).find(key => key.textContent.toLowerCase() === letter);
 
         if (guessLetters[i] !== null && correctWordLetters.includes(letter)) {
             letterDiv.classList.add('present');
@@ -100,9 +99,7 @@ function handleSubmitGuess() {
             letterStatus[letter] = 'present';
         } else if (guessLetters[i] !== null) {
             letterDiv.classList.add('absent');
-            if (!letterStatus[letter]) {
-                letterStatus[letter] = 'absent';
-            }
+            letterStatus[letter] = 'absent';
         }
     }
 
@@ -118,37 +115,25 @@ function handleSubmitGuess() {
     currentAttempt++;
     currentGuess = "";
 
-   if (correctGuess) {
-    handleWin();  // Call the handleWin function to show the modal and start the countdown
-} else if (currentAttempt >= maxAttempts) {
-    message.textContent = `Helaas druif, game over! Het woord was ${word}.`;
+    if (correctGuess) {
+        handleWin();
+    } else if (currentAttempt >= maxAttempts) {
+        message.textContent = `Helaas druif, game over! Het woord was ${word}.`;
+    }
 }
 
+// Function to handle the win and start the countdown
+function handleWin() {
+    correctWordElement.textContent = word;
+    winModal.style.display = "block";
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    winModal.style.display = "none";
+    // Set the target date and time (October 29, 19:00)
+    const targetDate = new Date("October 29, 2024 19:00:00").getTime();
+    const countdownElement = document.getElementById('countdown');
+
+    // Start the countdown to the target date
+    startCountdownToTargetDate(targetDate, countdownElement);
 }
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target === winModal) {
-        winModal.style.display = "none";
-    }
-    document.addEventListener('touchstart', function (event) {
-    if (event.touches.length > 1) {
-        event.preventDefault();
-    }
-}, { passive: false });
-
-let lastTouchEnd = 0;
-document.addEventListener('touchend', function (event) {
-    let now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-    }
-    lastTouchEnd = now;
-}, false);
 
 // Function to calculate time remaining and update the countdown
 function startCountdownToTargetDate(targetDate, display) {
@@ -173,17 +158,14 @@ function startCountdownToTargetDate(targetDate, display) {
     }, 1000);
 }
 
-// Function to handle the win and start the countdown
-function handleWin() {
-    correctWordElement.textContent = word;
-    winModal.style.display = "block";
-    
-    // Set the target date and time (October 29, 19:00)
-    const targetDate = new Date("October 29, 2024 19:00:00").getTime();
-    const countdownElement = document.getElementById('countdown');
-    
-    // Start the countdown to the target date
-    startCountdownToTargetDate(targetDate, countdownElement);
-}
+// When the user clicks on <span> (x), close the modal
+span.onclick = function () {
+    winModal.style.display = "none";
+};
 
-}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target === winModal) {
+        winModal.style.display = "none";
+    }
+};
