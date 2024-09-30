@@ -153,7 +153,7 @@ function startCountdownToTargetDate(targetDate, display) {
         // If the countdown is over, clear the interval
         if (distance < 0) {
             clearInterval(countdownInterval);
-            display.textContent = "Countdown ended!";
+            display.textContent = "Druif is back 🍇!";
         }
     }, 1000);
 }
