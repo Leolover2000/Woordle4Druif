@@ -128,7 +128,7 @@ function handleWin() {
     winModal.style.display = "block";
 
     // Set the target date and time (October 29, 19:00)
-    const targetDate = new Date("October 29, 2024 18:55:00").getTime();
+    const targetDate = new Date("October 30, 2024 00:55:00").getTime();
     const countdownElement = document.getElementById('countdown');
 
     // Start the countdown to the target date
