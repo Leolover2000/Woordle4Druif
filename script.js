@@ -118,13 +118,12 @@ function handleSubmitGuess() {
     currentAttempt++;
     currentGuess = "";
 
-    if (correctGuess) {
-        correctWordElement.textContent = word;
-        winModal.style.display = "block";
-    } else if (currentAttempt >= maxAttempts) {
-        message.textContent = `Helaas druif, game over! Het woord was ${word}.`;
-    }
+   if (correctGuess) {
+    handleWin();  // Call the handleWin function to show the modal and start the countdown
+} else if (currentAttempt >= maxAttempts) {
+    message.textContent = `Helaas druif, game over! Het woord was ${word}.`;
 }
+
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
